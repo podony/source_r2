@@ -127,8 +127,12 @@ class LanePlanner:
       r_prob * path_from_right_lane
     ) / (l_prob + r_prob + 1e-4)
 
-    lane_path_y -= center_bias * np.sign(lane_path_y)
+    # lane_path_y -= center_bias * np.sign(lane_path_y)
+    # ✅ 오른쪽으로 5cm 이동 (EUV 기준 안정값)
+    RIGHT_BIAS = 0.05  # 5cm
 
+    lane_path_y += RIGHT_BIAS
+    
     safe_idxs = np.isfinite(self.ll_t)
 
     if safe_idxs[0]:
